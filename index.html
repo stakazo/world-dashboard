@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>世界時計</title>
+
+  <meta
+    name="description"
+    content="世界時計・天気・カレンダーを表示するダッシュボード"
+  />
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+<link
+  rel="icon"
+  href="assets/favicon.ico"
+/>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+  <div class="logo">
+    GLOBAL<br>
+    DASHBOARD
+  </div>
+
+  <button
+    class="side-btn"
+    onclick="showClock()"
+  >
+    🕒
+    <span>時計</span>
+  </button>
+
+  <button
+    class="side-btn"
+    onclick="showCalendar()"
+  >
+    📅
+    <span>カレンダー</span>
+  </button>
+
+  <button
+    class="side-btn"
+    onclick="showWeather()"
+  >
+    ☁️
+    <span>天気</span>
+  </button>
+
+</div>
+
+<div class="content">
+
+  <!-- CLOCK -->
+
+  <div class="page active" id="clock-page">
+
+    <h1>世界時計</h1>
+
+    <div class="main-clock">
+
+      <h2>東京</h2>
+
+      <div id="tokyo-time">
+        Loading...
+      </div>
+
+      <div id="tokyo-date"></div>
+
+      <div id="clock-diff"></div>
+
+    </div>
+
+    <div class="grid" id="clock-grid"></div>
+
+  </div>
+
+  <!-- CALENDAR -->
+
+  <div class="page" id="calendar-page">
+
+    <h1>カレンダー</h1>
+
+    <div class="calendar-container">
+
+      <div
+        class="calendar-header"
+        id="calendar-title"
+      ></div>
+
+      <div
+        class="calendar-grid"
+        id="calendar-grid"
+      ></div>
+
+    </div>
+
+  </div>
+
+  <!-- WEATHER -->
+
+  <div class="page" id="weather-page">
+
+    <h1>天気</h1>
+
+    <div
+      class="weather-grid"
+      id="weather-grid"
+    ></div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

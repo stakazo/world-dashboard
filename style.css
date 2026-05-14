@@ -367,3 +367,240 @@ h1{
   }
 
 }
+
+/* ===================================== */
+/* MOBILE RESPONSIVE */
+/* ===================================== */
+
+@media(max-width:700px){
+
+  body{
+
+    flex-direction:column;
+
+  }
+
+  /* =========================
+     SIDEBAR → BOTTOM NAV
+  ========================= */
+
+  .sidebar{
+
+    width:100%;
+
+    height:82px;
+
+    min-height:auto;
+
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+    top:auto;
+
+    flex-direction:row;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    padding:0;
+
+    border-right:none;
+
+    border-top:
+      1px solid rgba(255,255,255,0.08);
+
+    background:rgba(15,23,42,0.92);
+
+    backdrop-filter:blur(16px);
+
+  }
+
+  .logo{
+
+    display:none;
+
+  }
+
+  /* =========================
+     BUTTONS
+  ========================= */
+
+  .side-btn{
+
+    width:64px;
+
+    height:64px;
+
+    margin:0;
+
+    border-radius:18px;
+
+    font-size:1.3rem;
+
+  }
+
+  .side-btn span{
+
+    font-size:0.68rem;
+
+    margin-top:4px;
+
+  }
+
+  /* =========================
+     CONTENT
+  ========================= */
+
+  .content{
+
+    margin-left:0;
+
+    width:100%;
+
+    padding-bottom:110px;
+
+  }
+
+  .page{
+
+    padding:24px 14px;
+
+  }
+
+  h1{
+
+    font-size:2rem;
+
+    margin-bottom:28px;
+
+  }
+
+  /* =========================
+     MAIN CLOCK
+  ========================= */
+
+  .main-clock{
+
+    padding:28px 18px;
+
+    border-radius:22px;
+
+  }
+
+  #tokyo-time{
+
+    font-size:2.3rem;
+
+    letter-spacing:2px;
+
+    line-height:1.2;
+
+  }
+
+  #tokyo-date{
+
+    font-size:0.95rem;
+
+  }
+
+  #clock-diff{
+
+    font-size:0.82rem;
+
+    line-height:1.5;
+
+  }
+
+  /* =========================
+     GRID
+  ========================= */
+
+  .grid,
+  .weather-grid{
+
+    grid-template-columns:1fr;
+
+    gap:16px;
+
+  }
+
+  .card,
+  .weather-card{
+
+    padding:20px;
+
+    border-radius:18px;
+
+  }
+
+  .city-name,
+  .prefecture{
+
+    font-size:1.2rem;
+
+  }
+
+  .time{
+
+    font-size:1.8rem;
+
+  }
+
+  /* =========================
+     CALENDAR
+  ========================= */
+
+  .calendar-container{
+
+    padding:18px;
+
+    border-radius:20px;
+
+  }
+
+  .calendar-header{
+
+    font-size:1.5rem;
+
+  }
+
+  .calendar-grid{
+
+    gap:6px;
+
+  }
+
+  .day-name{
+
+    padding:8px 4px;
+
+    font-size:0.78rem;
+
+  }
+
+  .day{
+
+    min-height:72px;
+
+    padding:8px 4px;
+
+    font-size:0.82rem;
+
+  }
+
+  .day small{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:0.62rem;
+
+    line-height:1.3;
+
+  }
+
+}

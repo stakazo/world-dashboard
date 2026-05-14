@@ -1,3 +1,21 @@
+// =====================================
+// DEVICE CHECK
+// =====================================
+
+const isMobile =
+  window.innerWidth <= 700;
+
+if(isMobile){
+
+  console.log("スマホ表示");
+
+}
+else{
+
+  console.log("PC表示");
+
+}
+
 function hideAllPages(){
 
   document

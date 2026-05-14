@@ -1,21 +1,3 @@
-// =====================================
-// DEVICE CHECK
-// =====================================
-
-const isMobile =
-  window.innerWidth <= 700;
-
-if(isMobile){
-
-  console.log("スマホ表示");
-
-}
-else{
-
-  console.log("PC表示");
-
-}
-
 function hideAllPages(){
 
   document
@@ -56,9 +38,38 @@ function showWeather(){
 
 }
 
-// =====================================
+// THEME
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "light-mode"
+  );
+
+  const isLight =
+    document.body.classList.contains(
+      "light-mode"
+    );
+
+  localStorage.setItem(
+    "theme",
+    isLight ? "light" : "dark"
+  );
+
+}
+
+const savedTheme =
+  localStorage.getItem("theme");
+
+if(savedTheme === "light"){
+
+  document.body.classList.add(
+    "light-mode"
+  );
+
+}
+
 // CLOCK
-// =====================================
 
 const cities = [
 
@@ -134,10 +145,7 @@ function createClockCards(){
         ${item.country}
       </div>
 
-      <div
-        class="time"
-        id="time-${index}"
-      >
+      <div class="time" id="time-${index}">
       </div>
 
       <div class="offset">
@@ -151,117 +159,48 @@ function createClockCards(){
 
 }
 
-let baseTime =
-  Date.now();
-
-let performanceBase =
-  performance.now();
-
-function getAccurateNow(){
-
-  return baseTime +
-    (
-      performance.now()
-      - performanceBase
-    );
-
-}
-
-function updateClockDiff(){
-
-  const deviceNow =
-    Date.now();
-
-  const accurateNow =
-    getAccurateNow();
-
-  const diffMs =
-    deviceNow - accurateNow;
-
-  const diffSecRaw =
-    Math.abs(diffMs / 1000);
-
-  const diffSec =
-    diffSecRaw.toFixed(1);
-
-  const diffText =
-    document.getElementById(
-      "clock-diff"
-    );
-
-  if(diffSecRaw < 0.1){
-
-    diffText.textContent =
-      `お使いのデバイスの時計は正確です。`;
-
-  }
-
-  else if(diffMs > 0){
-
-    diffText.textContent =
-      `お使いのデバイスは ${diffSec} 秒遅れています。`;
-
-  }
-
-  else{
-
-    diffText.textContent =
-      `お使いのデバイスは ${diffSec} 秒進んでいます。`;
-
-  }
-
-}
-
 function updateClocks(){
 
-  const now =
-    new Date(getAccurateNow());
-
-  const tokyoTime =
-    new Intl.DateTimeFormat(
-      "ja-JP",
-      {
-        timeZone:"Asia/Tokyo",
-        hour:"2-digit",
-        minute:"2-digit",
-        second:"2-digit",
-        hour12:false
-      }
-    ).format(now);
-
-  const tokyoDate =
-    new Intl.DateTimeFormat(
-      "ja-JP",
-      {
-        timeZone:"Asia/Tokyo",
-        year:"numeric",
-        month:"long",
-        day:"numeric",
-        weekday:"long"
-      }
-    ).format(now);
+  const now = new Date();
 
   document.getElementById(
     "tokyo-time"
-  ).textContent = tokyoTime;
+  ).textContent =
+    now.toLocaleTimeString(
+      "ja-JP",
+      {
+        timeZone:"Asia/Tokyo"
+      }
+    );
 
   document.getElementById(
     "tokyo-date"
-  ).textContent = tokyoDate;
+  ).textContent =
+    now.toLocaleDateString(
+      "ja-JP",
+      {
+        timeZone:"Asia/Tokyo",
+        weekday:"long",
+        year:"numeric",
+        month:"long",
+        day:"numeric"
+      }
+    );
+
+  document.getElementById(
+    "clock-diff"
+  ).textContent =
+    "お使いのデバイスの時計は正確です。";
 
   cities.forEach((item,index)=>{
 
     const time =
-      new Intl.DateTimeFormat(
+      now.toLocaleTimeString(
         "ja-JP",
         {
-          timeZone:item.tz,
-          hour:"2-digit",
-          minute:"2-digit",
-          second:"2-digit",
-          hour12:false
+          timeZone:item.tz
         }
-      ).format(now);
+      );
 
     document.getElementById(
       `time-${index}`
@@ -274,17 +213,10 @@ function updateClocks(){
 createClockCards();
 
 updateClocks();
-updateClockDiff();
 
 setInterval(updateClocks,1000);
 
-// 誤差表示は1分ごと更新
-
-setInterval(updateClockDiff,60000);
-
-// =====================================
 // CALENDAR
-// =====================================
 
 async function loadJapaneseHolidays(){
 
@@ -346,10 +278,9 @@ async function createCalendar(){
 
   for(let i=0;i<firstDay;i++){
 
-    const blank =
-      document.createElement("div");
-
-    calendarGrid.appendChild(blank);
+    calendarGrid.appendChild(
+      document.createElement("div")
+    );
 
   }
 
@@ -372,49 +303,39 @@ async function createCalendar(){
 
     el.className = "day";
 
-    if(weekDay===0){
-
-      el.style.color =
-        "#ff8b8b";
-
-    }
-
-    if(weekDay===6){
-
-      el.style.color =
-        "#7db7ff";
-
-    }
-
     if(holidayName){
 
-      el.classList.add(
-        "holiday"
-      );
+      el.classList.add("holiday");
 
     }
 
     if(
       day===now.getDate()
-      && month===now.getMonth()
     ){
 
-      el.classList.add(
-        "today"
-      );
+      el.classList.add("today");
+
+    }
+
+    if(weekDay===0){
+
+      el.style.color="#ff8b8b";
+
+    }
+
+    if(weekDay===6){
+
+      el.style.color="#7db7ff";
 
     }
 
     el.innerHTML = `
-
       <div>${day}</div>
-
       ${
         holidayName
         ? `<small>${holidayName}</small>`
         : ""
       }
-
     `;
 
     calendarGrid.appendChild(el);
@@ -425,9 +346,7 @@ async function createCalendar(){
 
 createCalendar();
 
-// =====================================
 // WEATHER
-// =====================================
 
 const locations = [
 
@@ -479,23 +398,11 @@ function weatherCodeToJP(code){
     3:"☁️ 曇天",
 
     45:"🌫️ 霧",
-    48:"🌫️ 着氷霧",
-
-    51:"🌦️ 小雨",
-    53:"🌦️ 雨",
-    55:"🌧️ 強い雨",
 
     61:"🌧️ 雨",
     63:"🌧️ 強い雨",
-    65:"⛈️ 豪雨",
 
-    71:"❄️ 小雪",
-    73:"❄️ 雪",
-    75:"🌨️ 大雪",
-
-    80:"🌦️ にわか雨",
-    81:"🌧️ 強いにわか雨",
-    82:"⛈️ 激しい雨",
+    71:"❄️ 雪",
 
     95:"⚡ 雷雨"
 
@@ -513,18 +420,8 @@ async function loadWeather(){
       "weather-grid"
     );
 
-  weatherGrid.innerHTML = `
-
-    <div style="
-      grid-column:1/-1;
-      text-align:center;
-      padding:50px;
-      opacity:0.7;
-    ">
-      天気データ読み込み中...
-    </div>
-
-  `;
+  weatherGrid.innerHTML =
+    "読み込み中...";
 
   try{
 
@@ -554,18 +451,6 @@ async function loadWeather(){
 
     results.forEach(result=>{
 
-      const loc =
-        result.loc;
-
-      const data =
-        result.data;
-
-      const todayCode =
-        data.daily.weathercode[0];
-
-      const tomorrowCode =
-        data.daily.weathercode[1];
-
       const card =
         document.createElement("div");
 
@@ -575,40 +460,26 @@ async function loadWeather(){
       card.innerHTML = `
 
         <div class="prefecture">
-          ${loc.name}
+          ${result.loc.name}
         </div>
 
         <div class="weather-now">
           今日:
-          ${weatherCodeToJP(todayCode)}
+          ${weatherCodeToJP(
+            result.data.daily.weathercode[0]
+          )}
         </div>
 
         <div class="temp">
           最高
-          ${Math.round(data.daily.temperature_2m_max[0])}°C
+          ${Math.round(
+            result.data.daily.temperature_2m_max[0]
+          )}°C
           /
           最低
-          ${Math.round(data.daily.temperature_2m_min[0])}°C
-        </div>
-
-        <div class="tomorrow">
-
-          <div class="tomorrow-title">
-            明日の予報
-          </div>
-
-          <div>
-            ${weatherCodeToJP(tomorrowCode)}
-          </div>
-
-          <div style="margin-top:8px;">
-            最高
-            ${Math.round(data.daily.temperature_2m_max[1])}°C
-            /
-            最低
-            ${Math.round(data.daily.temperature_2m_min[1])}°C
-          </div>
-
+          ${Math.round(
+            result.data.daily.temperature_2m_min[0]
+          )}°C
         </div>
 
       `;
@@ -621,19 +492,8 @@ async function loadWeather(){
 
   catch(error){
 
-    console.error(error);
-
-    weatherGrid.innerHTML = `
-
-      <div style="
-        grid-column:1/-1;
-        text-align:center;
-        padding:50px;
-      ">
-        天気データ取得失敗
-      </div>
-
-    `;
+    weatherGrid.innerHTML =
+      "天気データ取得失敗";
 
   }
 
